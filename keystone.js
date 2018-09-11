@@ -1,6 +1,7 @@
 require('dotenv').config()
 
 const keystone = require('keystone')
+const proxy = require('http-proxy-middleware')
 
 keystone.init({
 	auth: true,
@@ -15,7 +16,18 @@ keystone.init({
 keystone.import('/models')
 
 keystone.set('nav', {
-	users: 'users'
+	admin: 'users',
+	models: process.env.NAV ? process.env.NAV.split(',') : ''
+})
+
+keystone.set('routes', (app) => {
+	app.get('/', (req, res) => res.redirect('/keystone'))
+	app.get('/ping', (req, res) => res.send(200))
+	if (process.env.PROXY && process.env.PROXY_HOST) {
+		app.use(process.env.PROXY, proxy({
+			target: process.env.PROXY_HOST
+		}))
+	}
 })
 
 keystone.start()

@@ -2,8 +2,9 @@
   "name": "keystone-docker",
   "version": "0.0.1",
   "dependencies": {
-    "keystone": "git://github.com/keystonejs/keystone#936f301d62c08f9f3bafed29efff4a343e74e698",
-    "dotenv": "4.0.0"
+    "dotenv": "4.0.0",
+    "http-proxy-middleware": "^0.18.0",
+    "keystone": "git://github.com/keystonejs/keystone#936f301d62c08f9f3bafed29efff4a343e74e698"
   },
   "scripts": {
     "start": "node keystone.js"
